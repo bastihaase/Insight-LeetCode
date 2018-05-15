@@ -37,3 +37,26 @@ class Solution:
             if stra[i] != strb[i]:
                 return stra[:i]
         return stra[:m]
+
+
+## second, more functional version
+
+import functools
+
+class Solution2:
+    def longestCommonPrefix(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: str
+        """
+        if not strs:
+            return ""
+        return functools.reduce(self.commonPrefix, strs)
+
+
+    def commonPrefix(self, stra, strb):
+        m = min(len(stra), len(strb))
+        for i in range(m):
+            if stra[i] != strb[i]:
+                return stra[:i]
+        return stra[:m]
