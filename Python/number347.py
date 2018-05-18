@@ -34,3 +34,23 @@ class Solution2(object):
         for i in range(k):
             sol.append(heapq.heappop(heap)[1])
         return sol
+
+class Solution3(object):
+    def topKFrequent(self, nums, k):
+        max_freq = 0
+        freq = {}
+        for x in nums:
+            freq[x] = freq.get(x, 0) + 1
+            max_freq = max(freq[x], max_freq)
+
+        buckets = [[] for x in range(max_freq)]
+        for y in freq:
+            buckets[freq[y] - 1].append(y)
+
+        sol = []
+        for y in buckets[::-1]:
+            for x in y:
+                sol.append(x)
+                if len(sol) == k:
+                    return sol
+        return sol
