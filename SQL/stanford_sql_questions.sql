@@ -42,4 +42,32 @@ ON l1.ID1 = l2.ID2
 AND l1.ID2 = l2.ID1
 INNER JOIN Highschooler h2
 ON h2.ID = l2.ID1
-AND h1.name < h2.name;
+AND h1.name <= h2.name;
+
+-- Q4
+-- For each student A who likes a student B where the two are not friends,
+-- find if they have a friend C in common (who can introduce them!).
+-- For all such trios, return the name and grade of A, B, and C.
+
+SELECT h1.name,
+       h1.grade,
+       h2.name,
+       h2.grade,
+       h3.name,
+       h3.grade
+FROM Highschooler h1
+INNER JOIN Likes l
+ON h1.ID = l.ID1
+LEFT JOIN Friend f
+ON l.ID1 = f.ID1
+AND l.ID2 = f.ID2
+INNER JOIN Highschooler h2
+ON l.ID2 = h2.ID
+INNER JOIN Friend f2
+ON h1.ID = f2.ID1
+INNER JOIN Friend f3
+ON h2.ID = f3.ID1
+AND f2.ID2 = f3.ID2
+INNER JOIN Highschooler h3
+ON h3.ID = f2.ID2
+WHERE f.ID1 IS NULL;
