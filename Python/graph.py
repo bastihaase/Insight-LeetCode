@@ -88,7 +88,7 @@ class Graph():
 
             if clast:
                 new_edges[clast].append(current)
-                new_edges[current].append(clast)
+
 
             for v in self.adj[current]:
                 dist = v[1]
@@ -99,6 +99,17 @@ class Graph():
                     pq.decreaseKey(v[0], dist)
 
         return Graph(new_vertices, new_edges)
+
+    def approx_Travelling_Salesman(self):
+        mst = self.prims(self.vertices[0])
+        stack = [mst.vertices[0]]
+        res = []
+        while stack != []:
+            current = stack.pop()
+            res.append(current)
+            for x in mst.adj[current][::-1]:
+                stack.append(x)
+        return res + [self.vertices[0]]
 
 
 
@@ -133,3 +144,4 @@ adj_List2 = {
 graph2 = Graph(vertices2, adj_List2)
 print(graph2)
 print(graph2.prims(1))
+print(graph2.approx_Travelling_Salesman())
