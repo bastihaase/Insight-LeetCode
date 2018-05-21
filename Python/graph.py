@@ -11,7 +11,7 @@ class Graph():
         output = "vertices = " + str(self.vertices) + "\n"
         output += "edges = \n"
         for key, value in self.adj.items():
-            output += "     " + str(key) + ":" + str(value) + "\n"
+            output += "       " + str(key) + " : " + str(value) + "\n"
         return output
 
     def number_of_vertices(self):
