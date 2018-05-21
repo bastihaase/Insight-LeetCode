@@ -7,6 +7,13 @@ class Graph():
         self.vertices = vertices
         self.adj = adj_list
 
+    def __str__(self):
+        output = "vertices = " + str(self.vertices) + "\n"
+        output += "edges = \n"
+        for key, value in self.adj.items():
+            output += "     " + str(key) + ":" + str(value) + "\n"
+        return output
+
     def number_of_vertices(self):
         return len(self.vertices)
 
@@ -64,46 +71,40 @@ class Graph():
     def prims(self, start):
         pq = PriorityQueue()
         entries = dict([(str(v), float('inf')) for v in self.vertices])
-        entries[start] = ()
+        entries[str(start)] = 0
         pq.buildHeap([(float('inf'), v) for v in self.vertices])
         pq.decreaseKey(start, 0)
-        visited = set()
 
         new_vertices = []
         new_edges = dict([(x, []) for x in self.vertices])
-        last = None
+
+        last =  dict([(str(x), None) for x in self.vertices])
 
         while not pq.isEmpty():
             current = pq.delMin()
-            visited.add(current)
-            new_vertices.append(visited)
+            new_vertices.append(current)
 
-            if last:
-                new_edges[last].append(current)
-                new_edges[current].append(last)
+            clast = last[str(current)]
 
-            last = current[1]
+            if clast:
+                new_edges[clast].append(current)
+                new_edges[current].append(clast)
+
             for v in self.adj[current]:
-                dist = entries[str(current)] + v[1]
+                dist = v[1]
                 old = entries[str(v[0])]
                 if old > dist:
                     entries[str(v[0])] = dist
+                    last[str(v[0])] = current
                     pq.decreaseKey(v[0], dist)
 
         return Graph(new_vertices, new_edges)
 
 
 
-
-
-
-
-
-
-
 # For connected component and Dijkstra
-vertices = [1, 2, 3, 4, 5, 6, 7]
-adj_List = {1: [(2, 2), (3, 4), (4, 1)],
+vertices1 = [1, 2, 3, 4, 5, 6, 7]
+adj_List1 = {1: [(2, 2), (3, 4), (4, 1)],
             2: [(1, 2), (3, 1), (5, 2)],
             3: [(1, 4), (2, 1), (7, 1)],
             4: [(1, 1), (7, 2)],
@@ -111,9 +112,10 @@ adj_List = {1: [(2, 2), (3, 4), (4, 1)],
             6: [],
             7: [(4, 2), (3, 1)]}
 
-graph = Graph(vertices, adj_List)
+graph = Graph(vertices1, adj_List1)
 print(graph.connected_components())
 print(graph.Dijkstra(1))
+print(graph)
 
 
 # For travelling Salesman: graph satisfies triangle inequality
@@ -127,3 +129,7 @@ adj_List2 = {
     4: [(1, 1), (2, 3), (3, 4), (5, 3)],
     5: [(1, 2), (2, 3), (3, 2), (4, 3)]
 }
+
+graph2 = Graph(vertices2, adj_List2)
+print(graph2)
+print(graph2.prims(1))
