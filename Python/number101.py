@@ -27,9 +27,9 @@ class Solution:
             return True
         if not (root.left and root.right):
             return not(root.left or root.right)
-        return self.isEqual(root.left, root.right)
+        return self.isMirror(root.left, root.right)
 
-    def isEqual(self, r1, r2):
+    def isMirror(self, r1, r2):
         if not r1 or not r2:
             if not r1 and not r2:
                 return True
@@ -39,7 +39,7 @@ class Solution:
         if r1.val != r2.val:
             return False
 
-        return self.isEqual(r1.left, r2.right) and self.isEqual(r1.right, r2.left)
+        return self.isMirror(r1.left, r2.right) and self.isMirror(r1.right, r2.left)
 
 # not completed yet
 class Solution2:
