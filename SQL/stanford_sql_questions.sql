@@ -126,6 +126,14 @@ INNER JOIN Highschooler h3
 ON h3.ID = f2.ID2
 WHERE f.ID1 IS NULL;
 
+
+
+-- Q8
+-- Find the difference between the number of students in the school and the number of different first names.
+
+SELECT COUNT(ID) - COUNT(DISTINCT(name))
+FROM Highschooler h;
+
 -- Q9. Find the name and grade of all students who are liked by more than one other student.
 
 CREATE
