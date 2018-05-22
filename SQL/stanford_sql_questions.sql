@@ -74,6 +74,29 @@ INNER JOIN Highschooler h2
 ON h2.ID = l1.ID2
 WHERE l2.ID1 IS NULL;
 
+-- Q6
+-- Find names and grades of students who only have friends in the same grade.
+-- Return the result sorted by grade, then by name within each grade.
+
+CREATE
+TEMPORARY
+TABLE
+other
+AS
+SELECT h.ID
+FROM Highschooler h
+INNER JOIN Friend f
+ON h.ID = f.ID1
+INNER JOIN Highschooler h2
+ON h2.ID = f.ID2
+WHERE h.grade <> h2.grade;
+
+SELECT h.name, h.grade
+FROM Highschooler h
+LEFT JOIN other o
+ON h.ID = o.ID
+WHERE o.ID IS NULL
+ORDER BY h.grade, h.name;
 
 -- Q7
 -- For each student A who likes a student B where the two are not friends,
