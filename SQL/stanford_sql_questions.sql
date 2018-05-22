@@ -58,6 +58,23 @@ WHERE l1.ID1 IS NULL
 AND l2.ID1 IS NULL;
 
 
+-- Q5
+-- For every situation where student A likes student B, but we have no information about whom B likes (that is, B does not appear as an ID1 in the Likes table), return A and B's names and grades.
+
+SELECT h1.name,
+       h1.grade,
+       h2.name,
+       h2.grade
+FROM Highschooler h1
+INNER JOIN Likes l1
+ON h1.ID = l1.ID1
+LEFT JOIN Likes l2
+ON l1.ID2 = l2.ID1
+INNER JOIN Highschooler h2
+ON h2.ID = l1.ID2
+WHERE l2.ID1 IS NULL;
+
+
 -- Q7
 -- For each student A who likes a student B where the two are not friends,
 -- find if they have a friend C in common (who can introduce them!).
