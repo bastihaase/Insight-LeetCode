@@ -44,6 +44,20 @@ INNER JOIN Highschooler h2
 ON h2.ID = l2.ID1
 AND h1.name <= h2.name;
 
+-- Q4
+-- Find all students who do not appear in the Likes table (as a student who likes or is liked) and return their names and grades. Sort by grade, then by name within each grade.
+
+SELECT h.name,
+       h.grade
+FROM Highschooler h
+LEFT JOIN Likes l1
+ON h.ID = l1.ID1
+LEFT JOIN Likes l2
+ON h.ID = l2.ID2
+WHERE l1.ID1 IS NULL
+AND l2.ID1 IS NULL;
+
+
 -- Q7
 -- For each student A who likes a student B where the two are not friends,
 -- find if they have a friend C in common (who can introduce them!).
