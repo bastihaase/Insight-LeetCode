@@ -41,7 +41,7 @@ class Solution:
 
         return self.isEqual(r1.left, r2.right) and self.isEqual(r1.right, r2.left)
 
-
+# not completed yet
 class Solution2:
     def isSymmetric(self, root):
         """
@@ -49,8 +49,38 @@ class Solution2:
         :rtype: bool
         """
         dfs = []
-        stack = [root]
+        stack = []
 
-        while stack != []:
-            # make dfs but also return whether you are left or right child
-            # then, the output will reveal if it is symmetric
+        def peek(stack):
+            if len(stack) > 0:
+                return stack[-1]
+            return None
+
+        current = (root, "m")
+        while True:
+            while root:
+                if root.right:
+                    stack.append((root.right, "r"))
+                stack.append(current)
+                root = root.left
+                current = (root, "l")
+
+            root, orientation = stack.pop()
+
+            if root is not None:
+                if root.right is not None:#  and peek(stack) == root.right:
+                    if peek(stack) == root.right:
+                        stack.pop()
+                    stack.append((root, orientation))
+                    tmp = root.right
+                    root.right = None
+                    root = tmp
+                    orientation = "r"
+                else:
+                    dfs.append(str(root.val) + orientation)
+                    root = None
+
+            if len(stack) <= 0:
+                break
+
+        return dfs
