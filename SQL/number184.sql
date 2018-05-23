@@ -42,7 +42,7 @@ INNER JOIN Department d
 ON e.DepartmentId = d.Id;
 
 
---window but no join
+--window but no join except for department name
 SELECT Department, Employee, Salary FROM
 (
 SELECT d.name Department,
@@ -54,3 +54,20 @@ INNER JOIN Department d
 ON e.DepartmentId = d.Id
 ) tmp
 WHERE hey = 1;
+
+
+-- no window, but join
+
+SELECT d.Name Department,
+e.Name Employee,
+e.Salary Salary
+FROM Employee e
+INNER JOIN
+(SELECT e.DepartmentId dId,
+MAX(e.Salary) Salary
+FROM Employee e
+GROUP BY e.DepartmentID) e2
+ON e.DepartmentId = e2.dId
+AND e.Salary = e2.Salary
+INNER JOIN Department d
+ON e.DepartmentId = d.Id;
