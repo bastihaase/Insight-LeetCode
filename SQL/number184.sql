@@ -27,6 +27,8 @@
 -- | Sales      | Henry    | 80000  |
 -- +------------+----------+--------+
 
+
+--window and join
 SELECT d.name Department,
 e.name Employee,
 e.Salary Salary
@@ -38,3 +40,17 @@ ON e.Salary = e2.m
 AND e.name = e2.name
 INNER JOIN Department d
 ON e.DepartmentId = d.Id;
+
+
+--window but no join
+SELECT Department, Employee, Salary FROM
+(
+SELECT d.name Department,
+e.name Employee,
+e.Salary Salary,
+RANK() OVER (PARTITION BY DepartmentID ORDER BY Salary DESC) hey
+FROM Employee e
+INNER JOIN Department d
+ON e.DepartmentId = d.Id
+) tmp
+WHERE hey = 1;
