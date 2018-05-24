@@ -17,10 +17,9 @@
 -- | 1  | john@example.com |
 -- | 2  | bob@example.com  |
 -- +----+------------------+
-SELECT p.*
-FROM Person p
-INNER JOIN (
-SELECT MIN(Id) ID
-FROM Person
-GROUP BY Email) p2
-ON p.Id = p2.Id;
+
+DELETE p1
+FROM Person p1
+INNER JOIN Person p2
+WHERE p1.Email = p2.Email AND
+p1.Id > p2.Id
