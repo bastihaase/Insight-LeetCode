@@ -32,3 +32,23 @@ class Solution(object):
 
 
 # Iteratively
+
+class Solution2(object):
+    def reverseList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        if not head:
+            return head
+        current = head
+        previous = None
+        follower = current.next
+        while follower:
+            current.next = previous
+            previous = current
+            current = follower
+            follower = follower.next
+        current.next = previous
+
+        return current
