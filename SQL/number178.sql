@@ -30,7 +30,7 @@ DENSE_RANK() over(order by score desc) AS Rank
 FROM
 Scores;
 
--- MYSQL
+-- MySQL
 Select Scores.score as Score, rank.rankid as Rank
 from
 scores left join
@@ -40,3 +40,39 @@ from
 (select @rowid:=0) as temp2) as rank
 on Scores.score = rank.score
 order by Rank
+
+-- MySQL
+
+SELECT
+Score,
+@rank := @rank + (@prev <> (@prev := Score)) Rank
+FROM
+Scores,
+(SELECT @rank := 0, @prev := -1) init
+ORDER BY Score desc;
+
+SELECT S.Score, COUNT(S.score)
+FROM
+(SELECT S.score
+FROM Scores s
+INNER JOIN Scores s2
+ON s.Score >= s2.Score);
+
+SELECT s.Score Score,
+r.Rank Rank
+FROM
+Scores s
+INNER JOIN
+(
+SELECT tmp.Score Score,
+COUNT(DISTINCT tmp.other) Rank
+FROM
+(SELECT S.score Score,
+s2.Score other
+FROM Scores s
+INNER JOIN Scores s2
+ON s.Score <= s2.Score) tmp
+GROUP BY tmp.Score
+) r
+ON s.Score = r.Score
+ORDER BY s.Score DESC;
