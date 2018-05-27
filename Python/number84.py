@@ -27,3 +27,34 @@ class Solution(object):
                     results[x][j] = j
                 best = max(best, results[x][j])
         return best
+
+
+# divide and conquer style, divide  at the min of bar
+
+class Solution2(object):
+    def largestRectangleArea(self, heights):
+        """
+        :type heights: List[int]
+        :rtype: int
+        """
+        if not heights:
+            return 0
+        if len(heights) == 1:
+            return heights[0]
+
+
+
+        minimum = float('inf')
+        min_index = -1
+
+        for i, x in enumerate(heights):
+            print(min_index)
+            if x < minimum:
+                minimum = x
+                min_index = i
+
+        op1 = self.largestRectangleArea(heights[:min_index])
+        op2 = self.largestRectangleArea(heights[min_index + 1:])
+        op3 = minimum * len(heights)
+
+        return max(op1, op2, op3)
