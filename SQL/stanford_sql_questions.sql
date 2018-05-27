@@ -154,3 +154,14 @@ FROM Highschooler h
 INNER JOIN likecount c
 ON h.ID = c.ID
 AND c.likes > 1;
+
+
+-- Top N question
+
+SELECT emp1.department_id , emp1.salary
+FROM employees emp1
+WHERE (
+SELECT COUNT(DISTINCT(emp2.salary))
+FROM employees emp2
+WHERE emp2.salary > emp1.salary and emp1.department_id  = emp2.department_id ) in (0,1) group by emp1.department_id , emp1.salary
+ORDER BY department_id, salary DESC;
