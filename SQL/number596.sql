@@ -36,3 +36,10 @@ FROM   courses
 GROUP BY class
 ) tmp
 WHERE n > 4;
+
+--
+
+SELECT class
+FROM courses
+GROUP BY class
+HAVING COUNT(DISTINCT student) >= 5
