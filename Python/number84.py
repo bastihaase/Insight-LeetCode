@@ -58,3 +58,27 @@ class Solution2(object):
         op3 = minimum * len(heights)
 
         return max(op1, op2, op3)
+
+
+
+
+# O(n) using stack
+
+class Solution3(object):
+    def largestRectangleArea(self, heights):
+        """
+        :type heights: List[int]
+        :rtype: int
+        """
+        temp = []
+        stack = []
+        # append -infinity to evaluate the whole stack!
+        heights.append(float('-inf'))
+        for i,h in enumerate(heights):
+            cpos = i
+            while stack and h < stack[-1][0]:
+                ch, cpos = stack.pop()
+                temp.append(ch*(i - cpos ))
+            stack.append([h, cpos])
+
+        return max(temp) if temp else 0
