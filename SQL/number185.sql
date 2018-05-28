@@ -44,3 +44,19 @@ FROM
          INNER JOIN Department d
          ON d.Id = r.DepartmentId
 WHERE r.rank < 4;
+
+
+-- No window!
+
+SELECT d.name Department,
+e.name Employee,
+e.Salary
+FROM Employee e
+INNER JOIN Employee e2
+ON e.DepartmentId = e2.DepartmentId
+AND e.Salary <= e2.Salary
+INNER JOIN Department d
+ON e.DepartmentId = d.Id
+GROUP BY e.Id
+HAVING COUNT(DISTINCT e2.SALARY) <= 3
+ORDER BY d.Name , e.Salary DESC;
