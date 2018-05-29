@@ -30,3 +30,26 @@ class Solution:
             else:
                 res.append(-1)
         return res
+
+# better solution based on stacks
+class Solution2:
+    def nextGreaterElements(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        stack = []
+        output = [-1] * len(nums)
+
+        for i in range(len(nums)):
+            while len(stack) and nums[stack[-1]] < nums[i]:
+                output[stack.pop()] = nums[i]
+            stack.append(i)
+
+        for i in range(len(nums)):
+            while len(stack) and nums[stack[-1]] < nums[i]:
+                if i >= stack[-1]:
+                    break
+                output[stack.pop()] = nums[i]
+
+        return output
