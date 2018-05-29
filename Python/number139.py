@@ -43,3 +43,23 @@ class Solution:
                     if len(current) >= n and current[:n] == x:
                         stack.append(current[n:])
         return False
+
+
+# dynamic - this one actually passes!
+
+class Solution2:
+    def wordBreak(self, s, wordDict):
+        """
+        :type s: str
+        :type wordDict: List[str]
+        :rtype: bool
+        """
+        words = set(wordDict)
+        results = [(s[:i + 1] in words) for i in range(len(s))]
+        for i in range(len(s)):
+            if not results[i]:
+                for j in range(i):
+                    if results[j] and s[j + 1 : i + 1] in words:
+                        results[i] = True
+                        break
+        return results[-1]
