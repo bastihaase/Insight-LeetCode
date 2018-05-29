@@ -77,7 +77,7 @@ class MyQueue:
 
 # THis solution makes adding expensive, but pooping not!
 
-class MyQueue:
+class MyQueue2:
 
     def __init__(self):
         """
