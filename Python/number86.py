@@ -44,6 +44,8 @@ class Solution:
                     new_head = head
                     small = new_head
             head = head.next
+        if big:
+            big.next = None
         if small:
             small.next = big_head
         if new_head:
