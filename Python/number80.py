@@ -34,7 +34,6 @@
 # for (int i = 0; i < len; i++) {
 #     print(nums[i]);
 # }
-
 class Solution:
     def removeDuplicates(self, nums):
         """
@@ -43,26 +42,18 @@ class Solution:
         """
         if not nums:
             return 0
-        current, count, length = None, 0
-        start = 0
-        end = -1
+        current, count, length, offset = None, 0, 0, 0
         for i, x in enumerate(nums):
-            if start <= end:
-                nums[start] = x
-                start += 1
-
             if x == current:
                 count += 1
-                if start  > end:
-                    if count == 3:
-                        start = i
-                        end = i
-                    elif count > 3:
-                        end += 1
-                    else:
-                        length += 1
+                if count >= 3:
+                    offset += 1
+                else:
+                    length += 1
+                    nums[i - offset] = x
             else:
                 count = 1
                 current = x
                 length += 1
+                nums[i - offset] = x
         return length
