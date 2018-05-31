@@ -43,7 +43,7 @@ class Solution:
         """
         if not nums:
             return 0
-        current, count = None, 0
+        current, count, length = None, 0
         start = 0
         end = -1
         for i, x in enumerate(nums):
@@ -59,6 +59,10 @@ class Solution:
                         end = i
                     elif count > 3:
                         end += 1
+                    else:
+                        length += 1
             else:
                 count = 1
                 current = x
+                length += 1
+        return length
