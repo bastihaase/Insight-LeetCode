@@ -82,3 +82,18 @@ def cipher(k, s):
         if len(res) == n:
             break
     return res
+
+# faster
+def cipher(k, s):
+    n = len(s) - (k - 1)
+    res = []
+    acc = 0
+    for i, x in enumerate(s):
+        if i >= k:
+            acc = acc ^ int(res[-k])
+        current = acc ^ int(x)
+        acc = acc ^ current
+        res.append(current)
+        if len(res) == n:
+            break
+    return reduce(lambda x, y: str(x) + str(y), res)
